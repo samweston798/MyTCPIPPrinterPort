@@ -1,0 +1,52 @@
+#include <Array.au3>
+#include "PrintMgr.au3"
+
+_Example()
+
+Func _Example()
+    ; Remove a printer called "My old Lexmark printer" :
+    _PrintMgr_RemovePrinter("My old Lexmark printer")
+
+    ; Remove the driver called "Lexmark T640" :
+    _PrintMgr_RemovePrinterDriver("Lexmark T640")
+
+    ; Remove the TCP/IP printer port called "TCP/IP"
+    _PrintMgr_RemoveTCPIPPrinterPort("MyOLDPrinterPort")
+
+    ; Add a driver, called "Samsung ML-451x 501x Series", and driver inf file is ".\Samsung5010\sse2m.inf"
+    _PrintMgr_AddPrinterDriver("Samsung ML-451x 501x Series", "Windows NT x86", @ScriptDir & "\Samsung5010", @ScriptDir & "\Samsung5010\sse2m.inf")
+
+    ; Add a TCP/IP printer port, called "MyTCPIPPrinterPort", with IPAddress = 192.168.1.10 and Port = 9100
+    _PrintMgr_AddTCPIPPrinterPort("MyTCPIPPrinterPort", "192.168.1.10", 9100)
+
+    ; Add a printer, give it the name "My Printer", use the driver called "Samsung ML-451x 501x Series" and the port called "MyTCPIPPrinterPort"
+    _PrintMgr_AddPrinter("My Printer", "Samsung ML-451x 501x Series", "MyTCPIPPrinterPort")
+
+    ; Set the printer called "My Printer" as default printer
+    _PrintMgr_SetDefaultPrinter("My Printer")
+
+    ; Connect to the shared printer "\\192.168.1.1\HPDeskjetColor")
+    _PrintMgr_AddWindowsPrinterConnection("\\192.168.1.1\HPDeskjetColor")
+
+    ; List all installed printers
+    Local $aPrinterList = _PrintMgr_EnumPrinter()
+    _ArrayDisplay($aPrinterList)
+
+    ; List all printers configuration
+    Local $aPrinterConfig = _PrintMgr_EnumPrinterConfiguration()
+    _ArrayDisplay($aPrinterConfig)
+
+    ; List all installed printer drivers
+    Local $aDriverList = _PrintMgr_EnumPrinterDriver()
+    _ArrayDisplay($aDriverList)
+
+    ; Retrieve the printer configuration for the printer called "Lexmark T640"
+    $aPrinterConfig = _PrintMgr_EnumPrinterConfiguration("Lexmark T640")
+    _ArrayDisplay($aPrinterConfig)
+
+    ; Add a local printer port (for a file output)
+    _PrintMgr_AddLocalPort("c:\temp\output.pcl")
+
+    ; Remove the local port
+    _PrintMgr_RemoveLocalPort("c:\temp\output.pcl")
+EndFunc   ;==>_Example
